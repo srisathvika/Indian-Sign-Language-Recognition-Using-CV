@@ -15,6 +15,8 @@ mp_drawing_styles=mp.solutions.drawing_styles
 hands=mp_hands.Hands(static_image_mode=True,min_detection_confidence=0.3)
 labels_dict={0:'A',1:'B',2:'L'}
 while True:
+    if cv2.waitKey(25) == ord('q'):
+        break
     data_aux=[]
     x_=[]
     y_=[]
