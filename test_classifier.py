@@ -2,18 +2,28 @@ import cv2
 import mediapipe as mp
 import pickle
 import numpy as np
+import pyttsx3
 
 model_dict=pickle.load(open('./model.p','rb'))
 model=model_dict['model']
 
 cap=cv2.VideoCapture(0)
 
+text_speech=pyttsx3.init()
 mp_hands=mp.solutions.hands
 mp_drawing=mp.solutions.drawing_utils
 mp_drawing_styles=mp.solutions.drawing_styles
 
 hands=mp_hands.Hands(static_image_mode=True,min_detection_confidence=0.3)
-labels_dict={0:'A',1:'B',2:'L'}
+labels_dict={0:'A',1:'B',2:'C',
+             3:'D',4:'E',5:'F',
+             6:'G',7:'H',8:'I',
+             9:'J',10:'K',11:'L',
+             12:'M',13:'N',14:'O',
+             15:'P',16:'Q',17:'R',
+             18:'S',19:'T',20:'U',
+             21:'V',22:'W',23:'X',
+             24:'Y',25:'Z'}
 while True:
     if cv2.waitKey(25) == ord('q'):
         break
@@ -60,6 +70,7 @@ while True:
         predicted_char= labels_dict[int(prediction[0])]  
         
         print(predicted_char)
+        text_speech.say(predicted_char)
              
                             
         cv2.rectangle(frame,(x1,y1),(x2,y2),(0,0,0),4)
@@ -68,7 +79,9 @@ while True:
     
    
     cv2.imshow('frame',frame)
-    cv2.waitKey(1)
+    cv2.waitKey(15)
+    text_speech.runAndWait()
+    
     
   
 cap.release()  
